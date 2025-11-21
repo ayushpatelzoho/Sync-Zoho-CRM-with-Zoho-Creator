@@ -1,0 +1,14 @@
+void automation.deleteAccount(String creatorRecordId)
+{
+owner_name = "ayushpatelzoho";
+app_link_name = "sync-with-crm";
+report_link_name = "All_Accounts";
+// 
+response = invokeurl
+[
+	url :"https://www.zohoapis.in/creator/v2.1/data/" + owner_name + "/" + app_link_name + "/report/" + report_link_name + "/" + creatorRecordId
+	type :DELETE
+	connection:"oauth"
+];
+info response;
+}
