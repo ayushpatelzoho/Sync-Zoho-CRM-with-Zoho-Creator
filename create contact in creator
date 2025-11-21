@@ -1,0 +1,20 @@
+void automation.createContact(Int contactId)
+{
+// contactId = 1100812000000697281;
+contactInfo = zoho.crm.getRecordById("Contacts",contactId);
+info contactInfo;
+mp = Map();
+mp.put("First_Name",ifnull(contactInfo.get("First_Name"),""));
+mp.put("Last_Name",ifnull(contactInfo.get("Last_Name"),""));
+mp.put("Email",ifnull(contactInfo.get("Email"),""));
+mp.put("Phone_Number",ifnull(contactInfo.get("Phone"),""));
+mp.put("CRM_Contact_Id",contactId);
+// info mp ;
+res = zoho.creator.createRecord("ayushpatelzoho","sync-with-crm","Contacts",mp,Map(),"oauth");
+if(res.containKey("data") && res.get("data").containKey("ID"))
+{
+	mp = Map();
+	mp.put("Creator_Contact_Id",res.get("data").get("ID"));
+	info zoho.crm.updateRecord("Contacts",contactId,mp);
+}
+}
