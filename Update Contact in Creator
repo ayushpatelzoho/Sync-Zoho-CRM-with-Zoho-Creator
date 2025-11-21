@@ -1,0 +1,19 @@
+void automation.updateContact(Int contactId)
+{
+contactInfo = zoho.crm.getRecordById("Contacts",contactId);
+creatorRecordId = contactInfo.get("Creator_Contact_Id");
+// info creatorRecordId;
+if(isnull(creatorRecordId))
+{
+	info "No record associated with Creator";
+	return;
+}
+// info contactInfo;
+mp = Map();
+mp.put("First_Name",ifnull(contactInfo.get("First_Name"),""));
+mp.put("Last_Name",ifnull(contactInfo.get("Last_Name"),""));
+mp.put("Email",ifnull(contactInfo.get("Email"),""));
+mp.put("Phone_Number",ifnull(contactInfo.get("Phone"),""));
+res = zoho.creator.updateRecord("ayushpatelzoho","sync-with-crm","All_Contacts",creatorRecordId,mp,Map(),"oauth");
+info res;
+}
