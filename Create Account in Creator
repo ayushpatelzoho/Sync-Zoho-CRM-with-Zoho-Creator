@@ -1,0 +1,21 @@
+void automation.createAccount(Int accId)
+{
+accInfo = zoho.crm.getRecordById("Accounts",accId);
+// info accInfo ;
+mp = Map();
+mp.put("account_name",ifnull(accInfo.get("Account_Name"),""));
+mp.put("phone",ifnull(accInfo.get("Phone"),""));
+mp.put("Account_Site",ifnull(accInfo.get("Account_Site"),""));
+mp.put("Rating",ifnull(accInfo.get("Rating"),""));
+mp.put("CRM_Account_Id",accId);
+// info mp ;
+res = zoho.creator.createRecord("ayushpatelzoho","sync-with-crm","Accounts",mp,Map(),"oauth");
+// info res;
+if(res.containKey("data") && res.get("data").containKey("ID"))
+{
+	mp = Map();
+	mp.put("Creator_Account_Id",res.get("data").get("ID"));
+	info zoho.crm.updateRecord("Accounts",accId,mp);
+}
+//
+}
