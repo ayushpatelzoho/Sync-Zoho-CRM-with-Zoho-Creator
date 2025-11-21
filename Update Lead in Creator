@@ -1,0 +1,21 @@
+void automation.updateLead(Int leadId)
+{
+leadInfo = zoho.crm.getRecordById("Leads",leadId);
+creatorRecordId = leadInfo.get("Creator_Lead_Id");
+// info creatorRecordId;
+if(isnull(creatorRecordId))
+{
+	info "No record associated with Creator";
+	return;
+}
+// info contactInfo;
+mp = Map();
+mp.put("first_name",ifnull(leadInfo.get("First_Name"),""));
+mp.put("Last_Name",ifnull(leadInfo.get("Last_Name"),""));
+mp.put("email",ifnull(leadInfo.get("Email"),""));
+mp.put("phone_number",ifnull(leadInfo.get("Phone"),""));
+mp.put("Company",ifnull(leadInfo.get("Company"),""));
+// info mp;
+res = zoho.creator.updateRecord("ayushpatelzoho","sync-with-crm","Leads_Report",creatorRecordId.toLong(),mp,Map(),"oauth");
+info res;
+}
